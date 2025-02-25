@@ -1,0 +1,103 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Login - SB Admin</title>
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <script src="~/lib/fontawesome/all.js"></script>
+</head>
+<body class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                <div class="card-body">
+
+                                    <div id="lockoutMessage" class="sb-alert d-none">
+                                        <div class="text-center">
+                                            <p class="mb-1">Cuenta bloqueada temporalmente</p>
+                                            <p class="mb-0">Tiempo restante: <span id="countdown">0</span> segundos</p>
+                                        </div>
+                                    </div>
+
+                                    <div id="errorMessage" class="sb-alert-danger d-none"></div>
+                                    
+                                    <form asp-controller="Login" asp-action="Index" method="post">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" type="email" placeholder="Nombre usuario" name="correo" required />
+                                            <label for="inputEmail">Correo</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" type="password" placeholder="Contraseña" name="clave" required />
+                                            <label for="inputPassword">Contraseña</label>
+                                        </div>
+                                        
+                                        @if (ViewData["Mensaje"] != null)
+                                        {
+                                            <div class="form-group">
+                                                <div class="alert alert-danger" role="alert" id="alerta1">
+                                                    @ViewData["Mensaje"]
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (ViewData["TiempoBloqueado"] != null)
+                                        {
+                                            <div class="alert alert-warning" role="alert" id="alerta">
+                                                <p><strong>Tiempo restante:</strong> <span id="tiempo"></span> segundos</p>
+                                            </div>
+                                            <script>
+                                                // Guardar directamente en localStorage desde el backend
+                                                localStorage.setItem("TiempoBloqueado", "@ViewData["TiempoBloqueado"]");
+                                                console.log("Tiempo bloqueado guardado en localStorage:", localStorage.getItem("TiempoBloqueado"));
+                                            </script>
+                                        }
+                                        
+                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                            <button type="submit" class="btn btn-primary" id="btnlogin">Iniciar Sesión</button>
+                                        </div>
+                                       
+                                    </form>
+                                </div>
+                                <div class="card-footer text-center py-3">
+                                    <div class="small">
+                                        <a href="@Url.Action("Index", "Register")">¿No tienes una cuenta? Regístrate aquí</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/scripts.js"></script>
+</body>
+</html>
